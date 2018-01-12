@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {AuthService} from './auth.service';
+import {AccountBalanceService} from './account-balance.service';
 
 @Component({
   selector: 'app-root',
@@ -8,19 +9,29 @@ import {AuthService} from './auth.service';
 })
 export class AppComponent {
 
-  email = '';
-  password = '';
+  email = 'max@gmail.com';
+  password = '1234';
   loggedIn;
+  accountBalance;
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private balanceService: AccountBalanceService
   ) {
     this.authService.loggedIn.subscribe(loggedIn => {
       this.loggedIn = loggedIn;
     });
+    this.balanceService.accountBalance.subscribe(balance => {
+      this.accountBalance = balance;
+    })
   }
 
   doLogin() {
     this.authService.login(this.email, this.password)
   }
+
+  getBalance() {
+    this.balanceService.getAccountBalance();
+  }
+
 }

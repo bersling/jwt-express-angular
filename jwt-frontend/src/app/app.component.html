@@ -7,4 +7,15 @@
 </div>
 <div *ngIf="loggedIn" class="logged-in">
   You are logged in.
+  
+  <div class="account-balance-wrapper">
+    <div *ngIf="accountBalance">
+      Your balance is: {{accountBalance?.balance}}$
+    </div>
+    <br>
+    <div>
+      <button (click)="getBalance()">Get Balance</button>
+    </div>
+  </div>
+  
 </div>

@@ -8,6 +8,7 @@ import {FormsModule} from '@angular/forms';
 import {AuthService} from './auth.service';
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AccountBalanceService} from './account-balance.service';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     ToastrModule.forRoot()
   ],
   providers: [
-    AuthService
+    AuthService,
+    AccountBalanceService
   ],
   bootstrap: [AppComponent]
 })

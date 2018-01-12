@@ -1,17 +1,30 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ToastrService} from 'ngx-toastr';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class AuthService {
 
-  api = 'http://localhost:5000/api';
   loggedIn = new BehaviorSubject<boolean>(false);
   token;
 
+  buildHeaders(): HttpHeaders {
+    const headersConfig = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    };
+
+    if (this.token) {
+      headersConfig['Authorization'] = `Token ${this.token}`;
+    }
+    return new HttpHeaders(headersConfig);
+  }
+
+
   login(email: string, password: string) {
-    this.http.post(this.api + '/login', {
+    this.http.post(environment.apiUrl + '/login', {
       email: email,
       password: password
     }).subscribe((resp: any) => {
