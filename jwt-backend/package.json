@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node app.ts"
+    "start": "nodemon"
   },
   "repository": {
     "type": "git",
@@ -22,12 +22,15 @@
   },
   "homepage": "https://github.com/bersling/jwt#readme",
   "dependencies": {
+    "@types/body-parser": "^1.16.8",
+    "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "jsonwebtoken": "^8.1.0"
   },
   "devDependencies": {
     "@types/express": "^4.11.0",
     "@types/jsonwebtoken": "^7.2.5",
+    "nodemon": "^1.14.11",
     "ts-node": "^4.1.0",
     "typescript": "^2.6.2"
   }
