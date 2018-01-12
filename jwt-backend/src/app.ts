@@ -25,6 +25,8 @@ const appUsers = {
   }
 };
 
+const serverJWT_Secret = 'kpTxN=)7mX3W3SEJ58Ubt8-';
+
 app.post('/api/login', (req, res) => {
 
   if (req.body) {
@@ -32,7 +34,11 @@ app.post('/api/login', (req, res) => {
     if (user && user.pw === req.body.password) {
       const userWithoutPassword = {...user};
       delete userWithoutPassword.pw;
-      res.status(200).send(userWithoutPassword);
+      const token = jwt.sign(userWithoutPassword, serverJWT_Secret); // <==== The all-important "jwt.sign" function
+      res.status(200).send({
+        user: userWithoutPassword,
+        token: token
+      });
     } else {
       res.status(403).send({
         errorMessage: 'Permission denied!'
