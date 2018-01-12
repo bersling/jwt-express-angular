@@ -4,7 +4,8 @@
   "description": "Node.js backend for JWT",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node app.ts"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,15 @@
   "bugs": {
     "url": "https://github.com/bersling/jwt/issues"
   },
-  "homepage": "https://github.com/bersling/jwt#readme"
+  "homepage": "https://github.com/bersling/jwt#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "jsonwebtoken": "^8.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.11.0",
+    "@types/jsonwebtoken": "^7.2.5",
+    "ts-node": "^4.1.0",
+    "typescript": "^2.6.2"
+  }
 }
