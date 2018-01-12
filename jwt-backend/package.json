@@ -1,0 +1,23 @@
+{
+  "name": "jwt-backend",
+  "version": "0.0.0",
+  "description": "Node.js backend for JWT",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bersling/jwt.git"
+  },
+  "keywords": [
+    "JWT",
+    "Node.js"
+  ],
+  "author": "Daniel Niederberger",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bersling/jwt/issues"
+  },
+  "homepage": "https://github.com/bersling/jwt#readme"
+}
