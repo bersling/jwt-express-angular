@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {AuthService} from './auth.service';
 import {AccountBalanceService} from './account-balance.service';
 
@@ -14,20 +14,22 @@ export class AppComponent {
   loggedIn;
   accountBalance;
 
-  constructor(
-    private authService: AuthService,
-    private balanceService: AccountBalanceService
-  ) {
+  constructor(private authService: AuthService,
+              private balanceService: AccountBalanceService) {
     this.authService.loggedIn.subscribe(loggedIn => {
       this.loggedIn = loggedIn;
     });
     this.balanceService.accountBalance.subscribe(balance => {
       this.accountBalance = balance;
-    })
+    });
   }
 
   doLogin() {
-    this.authService.login(this.email, this.password)
+    this.authService.login(this.email, this.password);
+  }
+
+  doLogout() {
+    this.authService.logout();
   }
 
   getBalance() {

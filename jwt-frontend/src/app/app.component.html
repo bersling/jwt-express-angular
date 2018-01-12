@@ -1,9 +1,7 @@
-<input type="text" placeholder="Email" [(ngModel)]="email"><br><br>
-<input type="text" placeholder="Password" [(ngModel)]="password"><br><br>
-<button (click)="doLogin()">Login</button>
-
 <div *ngIf="!loggedIn" class="logged-out">
-  You are not logged in.
+  <input type="text" placeholder="Email" [(ngModel)]="email"><br><br>
+  <input type="text" placeholder="Password" [(ngModel)]="password"><br><br>
+  <button (click)="doLogin()">Login</button>
 </div>
 <div *ngIf="loggedIn" class="logged-in">
   You are logged in.
@@ -14,8 +12,10 @@
     </div>
     <br>
     <div>
-      <button (click)="getBalance()">Get Balance</button>
+      <button (click)="getBalance()">Get Account Balance</button>
     </div>
   </div>
+  
+  <button (click)="doLogout()">Log Out</button>
   
 </div>
