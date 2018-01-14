@@ -1,32 +1,35 @@
-import * as express from 'express';
-import * as jwt from 'jsonwebtoken';
+const express = require('express');
+const jwt = require('jsonwebtoken');
 const cors = require('cors');
-import * as bodyParser from 'body-parser';
+const bodyParser = require('body-parser');
 
+/**
+ * Creating a new express app
+ */
 const app = express();
+
+/**
+ * Setting up CORS, such that it can work together with an Application at another domain / port
+ */
 app.use(cors());
+
+/**
+ * For being able to read request bodies
+ */
 app.use(bodyParser.json());
 
-declare global {
-  namespace Express {
-    interface Request {
-      decoded: any;
-    }
-  }
-}
-
-interface User {
-  email: string,
-  name: string,
-  pw: string
-}
-
+/**
+ * Hello World Route, JWT-unrelated
+ */
 app.get('/api', (req, res) => {
   res.json({
     message: 'Welcome to the API'
   });
 });
 
+/**
+ * Some hardcoded users to make the demo work
+ */
 const appUsers = {
   'max@gmail.com': {
     email: 'max@gmail.com',
@@ -39,17 +42,15 @@ const appUsers = {
     pw: '1235' // YOU DO NOT WANT TO STORE PW's LIKE THIS IN REAL LIFE - HASH THEM FOR STORAGE
   }
 };
-const accountBalances = {
-  'max@gmail.com': 53762,
-  'lily@gmail.com': 4826
-};
 
-const getBalance = (email: string) => {
-  return accountBalances[email];
-};
-
+/**
+ * Secret Encryption Key
+ */
 const serverJWT_Secret = 'kpTxN=)7mX3W3SEJ58Ubt8-';
 
+/**
+ * Middleware to check that a payload is present
+ */
 const validatePayloadMiddleware = (req, res, next) => {
   if (req.body) {
     next();
@@ -60,8 +61,15 @@ const validatePayloadMiddleware = (req, res, next) => {
   }
 };
 
+/**
+ * Log the user in.
+ * User needs to provide pw and email, this is then compared to the pw in the "database"
+ * If pw and email match, the user is fetched from the database.
+ * Then the JWT-magic happens, where the jwt.sign function takes a JSON and a secret key (string) as an input,
+ * and returns a token (string).
+ * Finally the user and the generated token are returned from the request.
+ */
 app.post('/api/login', validatePayloadMiddleware, (req, res) => {
-
   const user = appUsers[req.body.email];
   if (user && user.pw === req.body.password) {
     const userWithoutPassword = {...user};
@@ -76,7 +84,6 @@ app.post('/api/login', validatePayloadMiddleware, (req, res) => {
       errorMessage: 'Permission denied!'
     });
   }
-
 });
 
 const jwtMiddleware = (req, res, next) => {
@@ -100,10 +107,24 @@ const jwtMiddleware = (req, res, next) => {
   } else {
     res.sendStatus(403);
   }
-}
+};
 
+/**
+ * Some hardcoded values of account balances of users and method to fetch the balance.
+ */
+const accountBalances = {
+  'max@gmail.com': 53762,
+  'lily@gmail.com': 4826
+};
+const getBalance = (email) => {
+  return accountBalances[email];
+};
+
+/**
+ * Endpoint to get users' account balance. Uses AuthMiddleware, such that only authenticated users can fetch balance.
+ */
 app.get('/api/balance', jwtMiddleware, (req, res) => {
-  const user: User = req.decoded;
+  const user = req.decoded;
   const balance = getBalance(user.email);
   if (balance) {
     res.status(200).send({
